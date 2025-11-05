@@ -3,22 +3,127 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tetris Ciberseguridad</title>
+    <title>Tetris Cyber - Security Battle</title>
     <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/game.css" />
   </head>
   <body>
-    <h1>🧱 TETRIS CIBERSEGURIDAD 🔐</h1>
+    <div class="grid-bg"></div>
+    <div class="scanline"></div>
 
-    <div class="menu">
-      <button id="btnSolo">Jugar Solo</button>
-      <button id="btnDuo">1 vs 1</button>
+    <!-- Pantalla de inicio -->
+    <div class="screen" id="startScreen">
+      <h1 class="title">TETRIS CYBER</h1>
+      <p class="subtitle">Security Battle</p>
+      <button class="btn" id="btnStart">INICIAR JUEGO</button>
     </div>
 
-    <canvas id="gameCanvas" width="320" height="640"></canvas>
+    <!-- Menú de selección -->
+    <div class="screen hidden" id="menuScreen">
+      <div class="menu-container">
+        <h2 class="menu-title">SELECCIONAR MODO</h2>
+        <button class="menu-btn" data-mode="1v1">1 VS 1 - Batalla Local</button>
+        <button
+          class="menu-btn"
+          style="opacity: 0.4; cursor: not-allowed"
+          disabled
+        >
+          Próximamente...
+        </button>
+        <button class="back-btn btn" id="btnBack">« VOLVER</button>
+      </div>
+    </div>
 
-    <script src="js/utils.js"></script>
+    <!-- Pantalla de sorteo de equipos -->
+    <div class="screen hidden" id="teamSelectScreen">
+      <div class="team-select-container">
+        <h2 class="team-title">SORTEO DE EQUIPOS</h2>
+        <div class="coin-flip" id="coinFlip">
+          <div class="coin">?</div>
+        </div>
+        <p class="team-message" id="teamMessage">Sorteando...</p>
+        <div class="team-buttons hidden" id="teamButtons">
+          <button class="team-btn blue-team" data-team="blue">
+            <span class="team-icon">🛡️</span>
+            BLUE TEAM
+            <span class="team-label">Defensa</span>
+          </button>
+          <button class="team-btn red-team" data-team="red">
+            <span class="team-icon">⚔️</span>
+            RED TEAM
+            <span class="team-label">Ataque</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pantalla del juego -->
+    <div class="screen hidden" id="gameScreen">
+      <div class="game-container">
+        <!-- Jugador 1 - Blue Team -->
+        <div class="player-area blue-side">
+          <div class="player-header">
+            <h3 class="player-name">BLUE TEAM</h3>
+            <div class="player-stats">
+              <span class="score">Score: <span id="scoreBlue">0</span></span>
+              <span class="lines">Lines: <span id="linesBlue">0</span></span>
+              <span class="level">Level: <span id="levelBlue">1</span></span>
+            </div>
+          </div>
+          <div class="board-container">
+            <canvas id="boardBlue" width="300" height="600"></canvas>
+          </div>
+          <div class="next-piece">
+            <p>NEXT</p>
+            <canvas id="nextBlue" width="120" height="120"></canvas>
+          </div>
+        </div>
+
+        <!-- Área central de información -->
+        <div class="center-info">
+          <div class="vs-badge">VS</div>
+          <div class="game-info">
+            <p class="info-text">Controles:</p>
+            <div class="controls-grid">
+              <div class="control-item blue">
+                <span>Blue: W(rotar) A S D</span>
+                <span>Shift+Space (hard drop)</span>
+              </div>
+              <div class="control-item red">
+                <span>Red: ↑(rotar) ← ↓ →</span>
+                <span>Space (hard drop)</span>
+              </div>
+            </div>
+          </div>
+          <button class="btn small-btn" id="btnPause">PAUSA</button>
+          <button class="btn small-btn" id="btnQuit">SALIR</button>
+        </div>
+
+        <!-- Jugador 2 - Red Team -->
+        <div class="player-area red-side">
+          <div class="player-header">
+            <h3 class="player-name">RED TEAM</h3>
+            <div class="player-stats">
+              <span class="score">Score: <span id="scoreRed">0</span></span>
+              <span class="lines">Lines: <span id="linesRed">0</span></span>
+              <span class="level">Level: <span id="levelRed">1</span></span>
+            </div>
+          </div>
+          <div class="board-container">
+            <canvas id="boardRed" width="300" height="600"></canvas>
+          </div>
+          <div class="next-piece">
+            <p>NEXT</p>
+            <canvas id="nextRed" width="120" height="120"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="config/constants.js"></script>
     <script src="js/piece.js"></script>
     <script src="js/board.js"></script>
+    <script src="js/ui.js"></script>
     <script src="js/game.js"></script>
     <script src="js/main.js"></script>
   </body>
