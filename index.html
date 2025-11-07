@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tetris Cyber - Security Battle</title>
     <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/game.css" />
   </head>
   <body>
     <div class="grid-bg"></div>
     <div class="scanline"></div>
+    <div class="status-message" id="statusMessage"></div>
 
     <!-- Pantalla de inicio -->
     <div class="screen" id="startScreen">
@@ -20,57 +20,59 @@
 
     <!-- Menú de selección -->
     <div class="screen hidden" id="menuScreen">
-      <div class="menu-container">
-        <h2 class="menu-title">SELECCIONAR MODO</h2>
-        <button class="menu-btn" data-mode="1v1">1 VS 1 - Batalla Local</button>
-        <button
-          class="menu-btn"
-          style="opacity: 0.4; cursor: not-allowed"
-          disabled
-        >
-          Próximamente...
-        </button>
-        <button class="back-btn btn" id="btnBack">« VOLVER</button>
-      </div>
+      <h2 class="title" style="font-size: 2.5rem">SELECCIONAR MODO</h2>
+      <button class="menu-btn" id="btn1v1">1 VS 1 - Batalla Local</button>
+      <button
+        class="menu-btn"
+        disabled
+        style="opacity: 0.4; cursor: not-allowed"
+      >
+        Próximamente...
+      </button>
+      <button class="btn" id="btnBack">« VOLVER</button>
     </div>
 
-    <!-- Pantalla de sorteo de equipos -->
+    <!-- Pantalla de sorteo -->
     <div class="screen hidden" id="teamSelectScreen">
-      <div class="team-select-container">
-        <h2 class="team-title">SORTEO DE EQUIPOS</h2>
-        <div class="coin-flip" id="coinFlip">
-          <div class="coin">?</div>
-        </div>
-        <p class="team-message" id="teamMessage">Sorteando...</p>
-        <div class="team-buttons hidden" id="teamButtons">
-          <button class="team-btn blue-team" data-team="blue">
-            <span class="team-icon">🛡️</span>
-            BLUE TEAM
-            <span class="team-label">Defensa</span>
-          </button>
-          <button class="team-btn red-team" data-team="red">
-            <span class="team-icon">⚔️</span>
-            RED TEAM
-            <span class="team-label">Ataque</span>
-          </button>
-        </div>
+      <h2 class="title" style="font-size: 2.5rem">SORTEO DE EQUIPOS</h2>
+      <div class="coin" id="coin">?</div>
+      <p
+        style="font-size: 1.5rem; text-shadow: 0 0 10px #00ff41"
+        id="teamMessage"
+      >
+        Sorteando...
+      </p>
+      <div class="team-buttons hidden" id="teamButtons">
+        <button class="team-btn blue-team" data-team="blue">
+          <span style="font-size: 3rem">🛡️</span>
+          BLUE TEAM
+          <span style="font-size: 0.9rem; opacity: 0.7">Defensa</span>
+        </button>
+        <button class="team-btn red-team" data-team="red">
+          <span style="font-size: 3rem">⚔️</span>
+          RED TEAM
+          <span style="font-size: 0.9rem; opacity: 0.7">Ataque</span>
+        </button>
       </div>
     </div>
 
     <!-- Pantalla del juego -->
     <div class="screen hidden" id="gameScreen">
       <div class="game-container">
-        <!-- Jugador 1 - Blue Team -->
+        <!-- Jugador Blue -->
         <div class="player-area blue-side">
-          <div class="player-header">
+          <div>
             <h3 class="player-name">BLUE TEAM</h3>
             <div class="player-stats">
-              <span class="score">Score: <span id="scoreBlue">0</span></span>
-              <span class="lines">Lines: <span id="linesBlue">0</span></span>
-              <span class="level">Level: <span id="levelBlue">1</span></span>
+              <span>Score: <span id="scoreBlue">0</span></span>
+              <span>Lines: <span id="linesBlue">0</span></span>
+              <span>Level: <span id="levelBlue">1</span></span>
             </div>
+            <div class="cpu-counter">CPU: <span id="cpuBlue">0</span></div>
           </div>
+          <div class="abilities" id="abilitiesBlue"></div>
           <div class="board-container">
+            <div class="board-overlay" id="overlayBlue"></div>
             <canvas id="boardBlue" width="300" height="600"></canvas>
           </div>
           <div class="next-piece">
@@ -79,37 +81,81 @@
           </div>
         </div>
 
-        <!-- Área central de información -->
+        <!-- Centro -->
         <div class="center-info">
           <div class="vs-badge">VS</div>
           <div class="game-info">
-            <p class="info-text">Controles:</p>
-            <div class="controls-grid">
-              <div class="control-item blue">
-                <span>Blue: W(rotar) A S D</span>
-                <span>Shift+Space (hard drop)</span>
+            <p style="margin-bottom: 10px"><strong>Controles:</strong></p>
+            <div
+              style="
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+                font-size: 0.65rem;
+              "
+            >
+              <div
+                style="border: 1px solid #00ccff; color: #00ccff; padding: 8px"
+              >
+                <div><strong>Blue 🎮/⌨️</strong></div>
+                <div style="font-size: 0.6rem">
+                  <div>Mando: Joystick/D-pad+X</div>
+                  <div>△▢OR1 (habilidades)</div>
+                  <div style="opacity: 0.6">Teclado: WASD+1234</div>
+                </div>
               </div>
-              <div class="control-item red">
-                <span>Red: ↑(rotar) ← ↓ →</span>
-                <span>Space (hard drop)</span>
+              <div
+                style="border: 1px solid #ff0040; color: #ff0040; padding: 8px"
+              >
+                <div><strong>Red 🎮/⌨️</strong></div>
+                <div style="font-size: 0.6rem">
+                  <div>Mando: Joystick/D-pad+X</div>
+                  <div>△▢OR1 (habilidades)</div>
+                  <div style="opacity: 0.6">Teclado: Flechas+7890</div>
+                </div>
               </div>
             </div>
+            <div
+              style="
+                font-size: 0.55rem;
+                margin-top: 5px;
+                opacity: 0.7;
+                text-align: center;
+              "
+            >
+              Conecta 2 mandos para modo arcade completo!
+            </div>
           </div>
-          <button class="btn small-btn" id="btnPause">PAUSA</button>
-          <button class="btn small-btn" id="btnQuit">SALIR</button>
+          <button
+            class="btn"
+            id="btnPause"
+            style="padding: 12px 30px; font-size: 1rem"
+          >
+            PAUSA
+          </button>
+          <button
+            class="btn"
+            id="btnQuit"
+            style="padding: 12px 30px; font-size: 1rem"
+          >
+            SALIR
+          </button>
         </div>
 
-        <!-- Jugador 2 - Red Team -->
+        <!-- Jugador Red -->
         <div class="player-area red-side">
-          <div class="player-header">
+          <div>
             <h3 class="player-name">RED TEAM</h3>
             <div class="player-stats">
-              <span class="score">Score: <span id="scoreRed">0</span></span>
-              <span class="lines">Lines: <span id="linesRed">0</span></span>
-              <span class="level">Level: <span id="levelRed">1</span></span>
+              <span>Score: <span id="scoreRed">0</span></span>
+              <span>Lines: <span id="linesRed">0</span></span>
+              <span>Level: <span id="levelRed">1</span></span>
             </div>
+            <div class="cpu-counter">CPU: <span id="cpuRed">0</span></div>
           </div>
+          <div class="abilities" id="abilitiesRed"></div>
           <div class="board-container">
+            <div class="board-overlay" id="overlayRed"></div>
             <canvas id="boardRed" width="300" height="600"></canvas>
           </div>
           <div class="next-piece">
@@ -120,11 +166,12 @@
       </div>
     </div>
 
-    <script src="config/constants.js"></script>
-    <script src="js/piece.js"></script>
-    <script src="js/board.js"></script>
-    <script src="js/ui.js"></script>
-    <script src="js/game.js"></script>
+    <!-- Scripts en orden de dependencia -->
+    <script src="js/constants.js"></script>
+    <script src="js/Piece.js"></script>
+    <script src="js/Board.js"></script>
+    <script src="js/Game.js"></script>
+    <script src="js/UI.js"></script>
     <script src="js/main.js"></script>
   </body>
 </html>

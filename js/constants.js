@@ -1,26 +1,20 @@
+// CONSTANTS
 const CONSTANTS = {
-  // Dimensiones del tablero
   BOARD_WIDTH: 10,
   BOARD_HEIGHT: 20,
   BLOCK_SIZE: 30,
-
-  // Velocidad del juego (milisegundos)
   INITIAL_SPEED: 1000,
-  SPEED_DECREASE: 50,
-  MIN_SPEED: 100,
-
-  // Colores de las piezas (temática cyber)
   COLORS: {
-    I: "#00ffff", // Cyan
-    O: "#ffff00", // Amarillo
-    T: "#ff00ff", // Magenta
-    S: "#00ff00", // Verde
-    Z: "#ff0000", // Rojo
-    J: "#0000ff", // Azul
-    L: "#ff8800", // Naranja
+    I: "#00ffff",
+    O: "#ffff00",
+    T: "#ff00ff",
+    S: "#00ff00",
+    Z: "#ff0000",
+    J: "#0000ff",
+    L: "#ff8800",
+    MALWARE: "#ff00ff",
+    GARBAGE: "#666666",
   },
-
-  // Formas de las piezas (matriz de rotación)
   SHAPES: {
     I: [
       [
@@ -132,15 +126,71 @@ const CONSTANTS = {
         [0, 1, 0],
       ],
     ],
+    MALWARE: [
+      [
+        [1, 0, 1],
+        [0, 1, 0],
+        [1, 0, 1],
+      ],
+    ],
   },
+  POINTS: { SINGLE: 100, DOUBLE: 300, TRIPLE: 500, TETRIS: 800 },
+};
 
-  // Puntuación
-  POINTS: {
-    SINGLE: 100,
-    DOUBLE: 300,
-    TRIPLE: 500,
-    TETRIS: 800,
-    SOFT_DROP: 1,
-    HARD_DROP: 2,
-  },
+// ABILITIES CONFIG
+const ABILITIES = {
+  red: [
+    {
+      id: "ddos",
+      name: "ddos_attack.sh",
+      cost: 3,
+      key: "7",
+      cooldown: 0,
+    },
+    {
+      id: "malware",
+      name: "malware_inject.py",
+      cost: 4,
+      key: "8",
+      cooldown: 0,
+    },
+    {
+      id: "spoof",
+      name: "spoof_queue.exe",
+      cost: 2,
+      key: "9",
+      cooldown: 0,
+    },
+    { id: "ransom", name: "ransom.bat", cost: 5, key: "0", cooldown: 0 },
+  ],
+  blue: [
+    {
+      id: "firewall",
+      name: "firewall_up.sh",
+      cost: 3,
+      key: "1",
+      cooldown: 0,
+    },
+    {
+      id: "patch",
+      name: "patch_vulnerability.py",
+      cost: 4,
+      key: "2",
+      cooldown: 0,
+    },
+    {
+      id: "decrypt",
+      name: "decrypt.exe",
+      cost: 2,
+      key: "3",
+      cooldown: 0,
+    },
+    {
+      id: "honeypot",
+      name: "honeypot.bat",
+      cost: 5,
+      key: "4",
+      cooldown: 0,
+    },
+  ],
 };

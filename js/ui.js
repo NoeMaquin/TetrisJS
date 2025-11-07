@@ -1,10 +1,6 @@
+// UI OBJECT
 const UI = {
-  screens: {
-    start: null,
-    menu: null,
-    teamSelect: null,
-    game: null,
-  },
+  screens: {},
 
   init() {
     this.screens.start = document.getElementById("startScreen");
@@ -15,21 +11,20 @@ const UI = {
   },
 
   setupEventListeners() {
-    document.getElementById("btnStart").addEventListener("click", () => {
-      this.showMenu();
-    });
-
-    document.getElementById("btnBack").addEventListener("click", () => {
-      this.showStart();
-    });
-
-    document.querySelectorAll(".menu-btn[data-mode]").forEach((btn) => {
-      btn.addEventListener("click", (e) => {
-        const mode = e.target.getAttribute("data-mode");
-        if (mode === "1v1") {
-          this.startTeamSelection();
-        }
-      });
+    document
+      .getElementById("btnStart")
+      .addEventListener("click", () => this.showMenu());
+    document
+      .getElementById("btnBack")
+      .addEventListener("click", () => this.showStart());
+    document
+      .getElementById("btn1v1")
+      .addEventListener("click", () => this.startTeamSelection());
+    document
+      .getElementById("btnPause")
+      .addEventListener("click", () => Game.togglePause());
+    document.getElementById("btnQuit").addEventListener("click", () => {
+      if (confirm("¿Seguro que quieres salir?")) Game.quit();
     });
   },
 
@@ -44,16 +39,16 @@ const UI = {
   },
 
   hideAll() {
-    Object.values(this.screens).forEach((screen) => {
-      if (screen) screen.classList.add("hidden");
-    });
+    Object.values(this.screens).forEach((screen) =>
+      screen.classList.add("hidden")
+    );
   },
 
   startTeamSelection() {
     this.hideAll();
     this.screens.teamSelect.classList.remove("hidden");
 
-    const coin = document.querySelector(".coin");
+    const coin = document.getElementById("coin");
     const message = document.getElementById("teamMessage");
     const buttons = document.getElementById("teamButtons");
 
@@ -65,7 +60,6 @@ const UI = {
       const firstPlayer = Math.random() < 0.5 ? "Jugador 1" : "Jugador 2";
       coin.textContent = firstPlayer === "Jugador 1" ? "1" : "2";
       message.textContent = `${firstPlayer} elige primero`;
-
       buttons.classList.remove("hidden");
 
       document.querySelectorAll(".team-btn").forEach((btn) => {
@@ -80,13 +74,7 @@ const UI = {
   startGame(firstPlayer, selectedTeam) {
     this.hideAll();
     this.screens.game.classList.remove("hidden");
-
     console.log(`${firstPlayer} eligió: ${selectedTeam} team`);
-
-    if (window.Game) {
-      Game.init(firstPlayer, selectedTeam);
-      // Forzar primer render
-      Game.draw();
-    }
+    Game.init(firstPlayer, selectedTeam);
   },
 };
