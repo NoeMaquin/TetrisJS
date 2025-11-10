@@ -78,7 +78,4 @@ tetrisjs/
 
 Este proyecto es de código abierto y está disponible para uso educativo.
 
----
 
-**Versión**: 2.0 (Refactorizada)
-**Última actualización**: Noviembre 2025
