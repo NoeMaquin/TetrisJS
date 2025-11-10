@@ -75,42 +75,6 @@ tetrisjs/
 5. El primer jugador elige su equipo (Blue o Red)
 6. ¡A jugar!
 
-## 📝 Arquitectura
-
-### Separación de Responsabilidades
-
-- **constants.js**: Configuración centralizada (dimensiones, colores, formas de piezas, habilidades)
-- **Piece.js**: Lógica de piezas individuales (rotación, movimiento)
-- **Board.js**: Gestión del tablero (grid, colisiones, limpieza de líneas, renderizado)
-- **Game.js**: Control del juego (game loop, gamepads, habilidades, gestión de turnos)
-- **UI.js**: Navegación entre pantallas (menús, sorteo, juego)
-- **main.js**: Inicialización del juego
-
-### Ventajas de la Arquitectura Modular
-
-✅ **Mantenibilidad**: Cada módulo tiene una responsabilidad clara
-✅ **Escalabilidad**: Fácil agregar nuevas funcionalidades
-✅ **Reutilización**: Los módulos pueden usarse en otros proyectos
-✅ **Testing**: Cada módulo puede testearse de forma independiente
-✅ **Colaboración**: Múltiples desarrolladores pueden trabajar sin conflictos
-
-## 🔧 Próximas Mejoras
-
-- [ ] Migrar de `setInterval` a `requestAnimationFrame`
-- [ ] Implementar sistema de guardado (LocalStorage)
-- [ ] Agregar modo solo jugador vs IA
-- [ ] Soporte responsive para móviles
-- [ ] Efectos de sonido
-- [ ] Sistema de leaderboards
-
-## 🐛 Bugs Conocidos
-
-1. **Spoof genera piezas aleatorias cada frame** (en lugar de mostrar la misma)
-2. **Honeypot no se desactiva automáticamente** (solo al usar Malware)
-3. **Malware blocks no actualizan coordenadas Y** cuando se limpian líneas
-4. **Memory leaks** en algunos timers y event listeners
-
-## 📜 Licencia
 
 Este proyecto es de código abierto y está disponible para uso educativo.
 
